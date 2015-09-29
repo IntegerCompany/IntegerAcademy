@@ -107,6 +107,7 @@ body {
 .header-text h4 {
     font-size: 2em;
     font-weight: 100;
+    color: #ffffff;
 }
 
 .header-text p {
@@ -133,6 +134,8 @@ form#launching-soon {
     background-image: url('downarrow.png');
     background-position: 98% 50%;
     background-repeat: no-repeat;
+
+    color: #000000;
 
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -161,6 +164,19 @@ form#launching-soon {
 #launching-soon select:focus,
 #launching-soon textarea:focus {
     outline-color: #1EBFFF;
+}
+
+#launching-soon > label,
+#launching-soon #user-photo-head,
+#launching-soon .skills-header {
+    color: #fff;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    /*text-shadow: none;*/
+}
+
+#launching-soon textarea {
+    color: #000000;
+    text-shadow: none;
 }
 
 #user-photo-preview {
@@ -280,6 +296,7 @@ form#launching-soon {
     font-size: inherit;
     margin-top: 1em;
     padding: 0px;
+    color: #000000;
 }
 
 #launching-soon input[type="submit"].load {
@@ -304,6 +321,7 @@ form#launching-soon {
     bottom: 0;
     top: 3em;
     background-color: rgba(118, 222, 234, 0.3);
+    background-color: rgba(0, 165, 161, 0.35);
     padding-bottom: 50px;
 }
 .form-description {
@@ -375,6 +393,7 @@ form#launching-soon {
 #skills-general {
     margin-top: 2em;
     margin-bottom: 1em;
+    overflow: hidden;
 }
 
 .skills-section {
