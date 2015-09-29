@@ -1,46 +1,52 @@
+
 /*
 ***********************
 **  Fonts
 ***********************
+
+ *= require_tree .
+ *= require_self
+ *= require bootstrap/3.3.5/bootstrap.min
+ *= require bootstrap/3.3.5/bootstrap-theme.min
 */
 
 /* font-family: "RobotoRegular"; */
 @font-face {
     font-family: "RobotoRegular";
-    src: url("../fonts/RobotoRegular/RobotoRegular.eot");
-    src: url("../fonts/RobotoRegular/RobotoRegular.eot?#iefix")format("embedded-opentype"),
-    url("../fonts/RobotoRegular/RobotoRegular.woff") format("woff"),
-    url("../fonts/RobotoRegular/RobotoRegular.ttf") format("truetype");
+    src: url("RobotoRegular.eot");
+    src: url("RobotoRegular.eot?#iefix")format("embedded-opentype"),
+    url("RobotoRegular.woff") format("woff"),
+    url("RobotoRegular.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
 }
 /* font-family: "RobotoLight"; */
 @font-face {
     font-family: "RobotoLight";
-    src: url("../fonts/RobotoLight/RobotoLight.eot");
-    src: url("../fonts/RobotoLight/RobotoLight.eot?#iefix")format("embedded-opentype"),
-    url("../fonts/RobotoLight/RobotoLight.woff") format("woff"),
-    url("../fonts/RobotoLight/RobotoLight.ttf") format("truetype");
+    src: url("RobotoLight.eot");
+    src: url("RobotoLight.eot?#iefix")format("embedded-opentype"),
+    url("RobotoLight.woff") format("woff"),
+    url("RobotoLight.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
 }
 /* font-family: "RobotoMedium"; */
 @font-face {
     font-family: "RobotoMedium";
-    src: url("../fonts/RobotoMedium/RobotoMedium.eot");
-    src: url("../fonts/RobotoMedium/RobotoMedium.eot?#iefix")format("embedded-opentype"),
-    url("../fonts/RobotoMedium/RobotoMedium.woff") format("woff"),
-    url("../fonts/RobotoMedium/RobotoMedium.ttf") format("truetype");
+    src: url("RobotoMedium.eot");
+    src: url("RobotoMedium.eot?#iefix")format("embedded-opentype"),
+    url("RobotoMedium.woff") format("woff"),
+    url("RobotoMedium.ttf") format("truetype");
     font-style: normal;
     font-weight: 400;
 }
 /* font-family: "RobotoBold"; */
 @font-face {
     font-family: "RobotoBold";
-    src: url("../fonts/RobotoBold/RobotoBold.eot");
-    src: url("../fonts/RobotoBold/RobotoBold.eot?#iefix")format("embedded-opentype"),
-    url("../fonts/RobotoBold/RobotoBold.woff") format("woff"),
-    url("../fonts/RobotoBold/RobotoBold.ttf") format("truetype");
+    src: url("RobotoBold.eot");
+    src: url("RobotoBold.eot?#iefix")format("embedded-opentype"),
+    url("RobotoBold.woff") format("woff"),
+    url("RobotoBold.ttf") format("truetype");
     font-style: normal;
     font-weight: 800;
 }
@@ -52,7 +58,7 @@
 */
 
 body {
-    background: #333333 url('../img/backround.jpg') 50% 50% no-repeat fixed;
+    background: #333333 url('backround.jpg') 50% 50% no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -89,10 +95,11 @@ body {
 }
 
 .header-text h1:before {
+    content: '';
     display: inline-block;
     width: 1em;
     height: 1em;
-    background: url('../img/nut_integer.png') 50% 50% no-repeat;
+    background: url('nut_integer.png') 50% 50% no-repeat;
     background-size: contain;
     margin-bottom: -.15em;
 }
@@ -123,7 +130,7 @@ form#launching-soon {
 }
 
 #launching-soon select {
-    background-image: url('../img/downarrow.png');
+    background-image: url('downarrow.png');
     background-position: 98% 50%;
     background-repeat: no-repeat;
 
@@ -276,7 +283,7 @@ form#launching-soon {
 }
 
 #launching-soon input[type="submit"].load {
-    background-image: url("../img/loader.gif");
+    background-image: url("loader.gif");
 }
 
 #launching-soon input[type="submit"]:hover,
