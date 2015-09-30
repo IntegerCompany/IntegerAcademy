@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
    root to: 'pages/home#index'
+   post '/', to: 'pages/home#create', as: 'create_student'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

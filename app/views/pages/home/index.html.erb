@@ -15,7 +15,8 @@
 				<p class="text-center text-italic">Submit your details below and we'll be in touch very soon...</p>
 			</div>
 
-			<form id="launching-soon" action="" method="post">
+			<!-- <form id="launching-soon" action="" method="post"> -->
+			<%=form_for @student, url: create_student_path, html: {id: 'launching-soon'} do |f| %>
  
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center">
 					<label for="user-photo" id="user-photo-preview">
@@ -28,50 +29,71 @@
 
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					Ім'я (укр.)
-					<input name="user-name" type="text" required autocomplete="off">
+					<!-- <input name="user-name" type="text" required autocomplete="off"> -->
+					<%= f.text_field :first_name, autocomplete: "off", required: "true" %>
 				</label>
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					Прізвище (укр.)
-					<input name="user-surname" type="text" required autocomplete="off">
+					<!-- <input name="user-surname" type="text" required autocomplete="off"> -->
+					<%= f.text_field :last_name, autocomplete: "off", required: "true" %>
 				</label>
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					Дата народження
-					<input name="user-birthday" type="text" required autocomplete="off">
+					<!-- <input name="user-birthday" type="text" required autocomplete="off"> -->
+					<%= f.text_field :birth_day, autocomplete: "off", required: "true" %>
 				</label>
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					Email
-					<input name="user-email" type="text" required autocomplete="off">
+					<!-- <input name="user-email" type="text" required autocomplete="off"> -->
+					<%= f.email_field :email, autocomplete: "off", required: "true" %>
 				</label>
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					Мобільний телефон
-					<input id="user-phone" name="user-resume" type="text" required autocomplete="off">
+					<!-- <input id="user-phone" name="user-resume" type="text" required autocomplete="off"> -->
+					<%= f.text_field :phone_number, autocomplete: "off", required: "true" %>
 				</label>
 
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					Рівень англійcької
-					<select title="" name="english_level" id="english_level" class="select ">
+<!-- 					<select title="" name="english_level" id="english_level" class="select ">
 						<option value="Beginner">Beginner</option>
 						<option value="Elementary">Elementary</option>
 						<option value="Pre-Intermediate">Pre-Intermediate</option>
 						<option value="Intermediate">Intermediate</option>
 						<option value="Upper-Intermediate">Upper-Intermediate</option>
 						<option value="Advanced">Advanced</option>
-					</select>
+					</select> -->
+
+					<%= f.select(:english_level, id: 'english_level', class: 'select') do %>
+					  <% [['Beginner', 'Beginner'],
+						 ['Elementary', 'Elementary'],
+						 ['Pre-Intermediate', 'Pre-Intermediate'],
+						 ['Intermediate', 'Intermediate'],
+						 ['Upper-Intermediate', 'Upper-Intermediate'],
+						 ['Advanced', 'Advanced']].each do |el| %>
+					    <%= content_tag(:option, el.first, value: el.last) %>
+					  <% end %>
+					<% end %>
+
 				</label>
 
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					ВНЗ
-					<input name="user-resume" type="text" required autocomplete="off">
+					<!-- <input name="user-resume" type="text" required autocomplete="off"> -->
+					<%= f.text_field :university, autocomplete: "off", required: "true" %>
 				</label>
 
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					Факультет
-					<input name="user-resume" type="text" required autocomplete="off">
+					<!-- <input name="user-resume" type="text" required autocomplete="off"> -->
+					<%= f.text_field :faculty, autocomplete: "off", required: "true" %>
 				</label>
 
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					Курc на якому навчаєтеcь
-					<input name="user-resume" type="text" required autocomplete="off">
+					<!-- <input name="user-resume" type="text" required autocomplete="off"> -->
+					<%= f.text_field :course, autocomplete: "off", required: "true" %>
+
 				</label>
 
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -87,401 +109,36 @@
 					Додати резюме
 					<input name="user-resume" type="file" required autocomplete="off">
 				</label>
+
 				<% @cats.each do |cat| %>
-					<section id="skills-general" class="container-fluid">
-						<header class="skills-header"><%= cat.title  %></header>
-						<ul class="skills">
-
-						<% cat.sub_categories.each do |sub_cat| %>
-							<li>
-								<label for=""><%= sub_cat.title %></label>
-								<div class="squaredThree">
-									<input type="checkbox" value="None" name="check" />
-									<label></label>
-								</div>
-							</li>
+				<section id="skills-<%= cat.title.downcase.delete(' -') %>" class="container-fluid skills-section">
+					<header class="skills-header"><%= cat.title %></header>
+						<%= f.fields_for @student.student_categories.new do |sc|%>
+							<ul class="skills">
+								<%= sc.collection_check_boxes :sub_category_id, cat.sub_categories, :id, :title do |cb| %>
+									<li>
+										<%= cb.label %>
+										<div class="squaredThree">
+											<%= cb.check_box %>
+											<label></label>
+										</div>
+									</li>
+								<% end %>
+							</ul>
 						<% end %>
-
-						</ul>
-					</section>
-
+				</section>
 				<% end %>
-
-				<section id="skills-general" class="container-fluid">
-					<header class="skills-header">General</header>
-					<ul class="skills">
-						<li>
-							<label for="">OOP</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Linux</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">GitHub</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Git Bash</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">UI/UX</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">OOD</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Photoshop</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Illustrator</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">HTTP</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-					</ul>
-				</section>
-
-				<section id="skills-frontend" class="container-fluid skills-section skills-web">
-					<header class="skills-header">Front-end</header>
-					<ul class="skills">
-						<li>
-							<label for="">HTML</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">HTML 5</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">CSS</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">CSS 3</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Bootstrap</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Sass</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Less</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">JavaScript</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">jQuery</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">AngularJS</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">EmberJS</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">AJAX</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-					</ul>
-				</section>
-
-				<section id="skills-backend" class="container-fluid skills-section skills-web">
-					<header class="skills-header">Back-end</header>
-					<ul class="skills">
-						<li>
-							<label for="">PHP</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Symfony</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">WordPress</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">E-commerce</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Magento</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">NodeJS</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Ruby</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Ruby on Rails</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Python</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">MySQL</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">PostgreSQL</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">SQLite</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-					</ul>
-				</section>
-
-				<section id="skills-android" class="container-fluid skills-section skills-mobile">
-					<header class="skills-header">Android</header>
-					<ul class="skills">
-						<li>
-							<label for="">Java</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">C++</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Android SDK</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Android Studio</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Android 5.0/6.0</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Activity Lifecycle</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Gradle</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Threads</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-					</ul>
-				</section>
-
-				<section id="skills-ios" class="container-fluid skills-section skills-mobile">
-					<header class="skills-header">IOS</header>
-					<ul class="skills">
-						<li>
-							<label for="">Objective c</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Swift</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Swift 2</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Core data</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Cocoa framework</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Program life cycle</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-						<li>
-							<label for="">Threads</label>
-							<div class="squaredThree">
-								<input type="checkbox" value="None" name="check" />
-								<label></label>
-							</div>
-						</li>
-					</ul>
-				</section>
 
 				<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					Про Себе
-					<textarea rows="6"></textarea>
+					<%= f.text_area :about_me, rows: 6 %>
 				</label>
 
 				<label class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<input type="submit" value="Submit" class="submit-btn transition04">
+					<!-- <input type="submit" value="Submit" class="submit-btn transition04"> -->
+					<%= f.submit "Надіслати", class: "submit-btn transition04" %>
 				</label>
-			</form>
+			<% end %>
 
 		</div>
 	</section>
