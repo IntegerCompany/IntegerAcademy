@@ -16,7 +16,7 @@
 //= require nicescroll-master/3.6.0/jquery.nicescroll.min
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+
 "use strict";
 		
 		(function($){
