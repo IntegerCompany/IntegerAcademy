@@ -38,7 +38,7 @@
 				    },
 
 					userNameInput = '[name="user-name"]',
-					userBirthdayInput = '[name="user-birthday"]',
+					userBirthdayInput = '[name="student[birth_day]"]',
 					userCityInput = '[name="user-city"]',
 					userGenderInput = '[name="user-gender"]',
 					userEmailInput = '[name="user-email"]',
@@ -141,7 +141,7 @@
 				$(niceScrollBox).niceScroll(niceScrollOptions);
 
 				$(userBirthday).mask("99.99.9999", {placeholder:"mm.dd.yyyy"});
-				$("#user-phone").mask("+38 (099) 999 99 99", {placeholder:"+38 (0__) ___ __ __"});
+				$("#student_phone_number").mask("+38 (099) 999 99 99", {placeholder:"+38 (0__) ___ __ __"});
 
 				$(document).on('click', labels, function(){
 					if(this.querySelector('.'+inputIncorClass) ) {
@@ -155,8 +155,33 @@
 				    }
 				});
 
+				$('#skills-general').removeClass('skills-section');
+				$('#skills-frontend').addClass('skills-web');
+				$('#skills-backend').addClass('skills-web');
+				$('#skills-android').addClass('skills-mobile');
+				$('#skills-ios').addClass('skills-mobile');
+
 				$(document).on("change", userDeveloperInput, function() {
 					var val = this.value.toLowerCase();
+					console.log('val: '+val);
+
+					// switch (val) {
+					// 	case 'web':
+					// 		$('#skills-frontend').fadeIn(800);
+					// 		$('#skills-backend').fadeIn(800);
+					// 		$('#skills-android').fadeOut(300);
+					// 		$('#skills-ios').fadeOut(300);
+					// 	  break;
+					// 	case 'mobile':
+					// 		$('#skills-android').fadeIn(800);
+					// 		$('#skills-ios').fadeIn(800);
+					// 		$('#skills-frontend').fadeOut(300);
+					// 		$('#skills-backend').fadeOut(300);
+					// 	  break;
+					// 	default:
+					// 	break;
+					// }
+
 					$('.skills-' + val ).fadeIn(800);
 					$('.skills-section:not(.skills-' + val +')').fadeOut(300);
 				});
@@ -168,6 +193,7 @@
             	});
 
 				$(formLaun4Soon).submit(function() {
+					console.log( $( this ).serializeArray() );
 
 					if( isNotValidForm() ) return false;
 

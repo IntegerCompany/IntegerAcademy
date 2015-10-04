@@ -159,6 +159,7 @@ form#launching-soon {
     border: none;
     padding: 3px 6px;
     border-radius: 0px;
+    color: #000000;
 }
 
 #launching-soon input:focus,
@@ -299,6 +300,7 @@ form#launching-soon {
     padding: 0px;
     color: #000000;
     text-shadow: none;
+    font-weight: inherit;
 }
 
 #launching-soon input[type="submit"].load {
