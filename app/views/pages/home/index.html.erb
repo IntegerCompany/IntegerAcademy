@@ -16,13 +16,15 @@
 			</div>
 
 			<!-- <form id="launching-soon" action="" method="post"> -->
-			<%=form_for @student, url: create_student_path, html: {id: 'launching-soon'} do |f| %>
+			<%=form_for @student, url: create_student_path, html: {id: 'launching-soon'}, multipart: true do |f| %>
  
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center">
 					<label for="user-photo" id="user-photo-preview">
 						<%= image_tag 'no-avatar.jpg' %>
 					</label>
-					<input id="user-photo" class="hide" name="user-resume" type="file" autocomplete="off">
+					<!-- <input id="user-photo" class="hide" name="user-resume" type="file" autocomplete="off"> -->
+					<%= f.file_field :photo, autocomplete: "off", required: "true", class: "hide", id: "user-photo" %>
+
 					<label id="user-photo-head" for="user-photo">Завантажити фото</label>
 					<div id="progress-bar"><div class="percent">0%</div></div>
 				</div>
@@ -107,28 +109,28 @@
 
 				<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					Додати резюме
-					<input name="user-resume" type="file" required autocomplete="off">
+					<!-- <input name="user-resume" type="file" required autocomplete="off"> -->
+					<%= f.file_field :portfolio, autocomplete: "off", required: "true" %>
 				</label>
-
 				<% @cats.each do |cat| %>
 				<section id="skills-<%= cat.title.downcase.delete(' -') %>" class="container-fluid skills-section">
 					<header class="skills-header"><%= cat.title %></header>
-						<%= f.fields_for @student.student_categories.new do |sc|%>
-							<ul class="skills">
-								<%= sc.collection_check_boxes :sub_category_id, cat.sub_categories, :id, :title do |cb| %>
-									<li>
-										<%= cb.label %>
-										<div class="squaredThree">
-											<%= cb.check_box %>
-											<label></label>
-										</div>
-									</li>
-								<% end %>
-							</ul>
+					<ul class="skills">
+						<% cat.sub_categories.each do |subCat| %>
+							<%= f.fields_for :student_categories do |sc| %>
+								<li>
+									<%= sc.label :sub_category_id, subCat.title %>
+									<div class="squaredThree">
+										<%= sc.check_box :sub_category_id, {}, subCat.id, nil %>
+										<label></label>
+									</div>
+								</li>
+							<% end %>	
 						<% end %>
+					</ul>
 				</section>
 				<% end %>
-
+				
 				<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					Про Себе
 					<%= f.text_area :about_me, rows: 6 %>

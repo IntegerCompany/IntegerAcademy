@@ -1,2 +1,25 @@
 class Pages::HomeController < ApplicationController
+	before_filter :student_params, only: [:create]
+	def index
+		@cats = Category.all
+		@student = Student.new
+	end
+
+	def create
+		@student = Student.new(student_params)
+		#@student.student_categories.build(student_cat_params)
+		#@student.save
+		redirect_to root_url
+	end
+
+	private
+	def student_params
+		params.require(:student).permit(:first_name, :last_name, 
+			:birth_day, :email, 
+			:english_level, :university, 
+			:faculty, :course, :field_of_study, 
+			:about_me, :phone_number,
+			:portfolio, :photo,
+			:student_categories_attributes => {:sub_category_id => []})
+	end
 end
